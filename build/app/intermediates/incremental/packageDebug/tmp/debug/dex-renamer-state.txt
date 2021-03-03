@@ -1,0 +1,4 @@
+#Wed Mar 03 17:38:53 PST 2021
+base.0=/Users/mlph-jerico/AndroidStudioProjects/flutter_training/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
