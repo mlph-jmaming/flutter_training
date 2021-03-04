@@ -86,10 +86,18 @@ class CustomUtils {
     });
   }
 
-  Future<void> showSendMoney(BuildContext context, DashBoardLayout activity) {
+  Future<void> showSendMoney(BuildContext context, DashBoardLayout activity,
+      {String name, int accountNumber}) {
     int tvAmount = 0;
     String tvAccountName = "";
     int tvAccountNumber = 0;
+    if (name != null) {
+      tvAccountName = name;
+    }
+    if (accountNumber != null) {
+      tvAccountNumber = accountNumber;
+    }
+
     return showDialog<int>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -103,6 +111,7 @@ class CustomUtils {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: TextField(
+                    controller: TextEditingController(text: tvAccountName),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius:
@@ -117,6 +126,8 @@ class CustomUtils {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 20),
                   child: TextField(
+                    controller:
+                        TextEditingController(text: tvAccountNumber.toString()),
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(

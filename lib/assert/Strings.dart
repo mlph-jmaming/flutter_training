@@ -30,4 +30,7 @@ class Strings {
   static const String ACCOUNT_NUMBER = "Account Number";
   static const String SEND_MONEY = "Send Money";
   static const String SEND = "Send";
+  static const String SCAN_QR_CODE = "Scan QR Code";
+  static const String PERMISSION_REQUIRED =
+      "Permission required to use Qr Code.";
 }

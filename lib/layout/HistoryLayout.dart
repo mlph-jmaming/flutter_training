@@ -19,7 +19,8 @@ class HistoryLayout extends StatelessWidget {
         transactionDate: Strings.TRANSCTION_DATE, amount: Strings.AMOUNT));
     DateFormat formatter = DateFormat('MMM dd,yyyy kk:mm');
 
-    for (Transaction transaction in userInformation.transactionHistory) {
+    for (Transaction transaction
+        in userInformation.getSortedTransactionHistoryDesc()) {
       historyList.add(listViewItem(
           transactionDate: formatter.format(transaction.dateTime),
           amount: CustomUtils().formatCurrency(transaction.amount)));

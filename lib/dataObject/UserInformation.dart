@@ -34,6 +34,16 @@ class UserInformation {
     addTempData();
   }
 
+  List<Transaction> getSortedTransactionHistoryDesc() {
+    transactionHistory.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    return transactionHistory;
+  }
+
+  addTransactionHistory(Transaction transaction) {
+    transactionHistory.add(transaction);
+    transactionHistory.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+  }
+
   addTempData() {
     //  Temporary history data
     transactionHistory.add(Transaction(amount: 1000));
