@@ -10,17 +10,20 @@ class UserInformation {
   String password = "echo1234";
   List<Transaction> transactionHistory = new List();
   List<Contact> contacts = new List();
+  int sentMoney = 0;
 
   String getCurrentLoadBalance() {
     int currentBalance = 0;
     for (Transaction transaction in transactionHistory) {
-      currentBalance = currentBalance + transaction.amount;
+      if (!transaction.isSent)
+        currentBalance = currentBalance + transaction.amount;
     }
 
-    for (Contact contact in this.contacts) {
-      currentBalance = currentBalance - contact.amount;
-    }
-    return CustomUtils().formatCurrency(currentBalance);
+    // for (Contact contact in this.contacts) {
+    //   currentBalance = currentBalance - contact.amount;
+    // }
+    currentBalance = (currentBalance - sentMoney);
+    return CustomUtils().formatCurrency(currentBalance, false);
   }
 
   UserInformation() {
@@ -46,10 +49,10 @@ class UserInformation {
 
   addTempData() {
     //  Temporary history data
-    transactionHistory.add(Transaction(amount: 1000));
-    transactionHistory.add(Transaction(amount: 2000));
-    transactionHistory.add(Transaction(amount: 3000));
-    transactionHistory.add(Transaction(amount: 4000));
-    transactionHistory.add(Transaction(amount: 5000));
+    transactionHistory.add(Transaction(amount: 1000, description: "Deposit 1"));
+    transactionHistory.add(Transaction(amount: 2000, description: "Deposit 2"));
+    transactionHistory.add(Transaction(amount: 3000, description: "Deposit 3"));
+    transactionHistory.add(Transaction(amount: 4000, description: "Deposit 4"));
+    transactionHistory.add(Transaction(amount: 5000, description: "Deposit 5"));
   }
 }

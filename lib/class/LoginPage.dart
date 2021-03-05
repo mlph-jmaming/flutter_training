@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/class/MainActivity.dart';
 import 'package:flutter_ap/dataObject/UserInformation.dart';
 import 'package:flutter_ap/layout/LoginLayout.dart';
@@ -16,7 +16,7 @@ class LogInPage extends StatefulWidget {
 
   @override
   _LogInPageState createState() {
-    logInPageState = _LogInPageState(this,userInformation);
+    logInPageState = _LogInPageState(this, userInformation);
     if (userInformation != null) {
       logInPageState.userInformation = userInformation;
     } else {
@@ -62,8 +62,7 @@ class _LogInPageState extends State<LogInPage> {
   registerAccount(UserInformation userInformation) {
     CustomUtils().navigateTo(
         context,
-            () =>
-            RegistrationPage(userInformation, (userResult) {
+        () => RegistrationPage(userInformation, (userResult) {
               this.userInformation = userResult;
             }));
   }

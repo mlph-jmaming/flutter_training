@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/class/CustomUtils.dart';
 import 'package:flutter_ap/dataObject/UserInformation.dart';
 import 'package:flutter_ap/layout/RegistrationLayout.dart';

@@ -33,4 +33,11 @@ class Strings {
   static const String SCAN_QR_CODE = "Scan QR Code";
   static const String PERMISSION_REQUIRED =
       "Permission required to use Qr Code.";
+  static const String DATE = "Date";
+  static const String DESCRIPTION = "Description";
+  static const String PLEASE_ENTER_DESCRIPTION = "Please enter description.";
+  static const String PLEASE_ENTER_AMOUNT = "Please enter amount to be add.";
+  static const String NEW_USER = "- - - New User - - -";
+  static const String SEND_TO = "Send To:";
+  static const String SAVE_AS_NEW_CONTACT = "Save as new contact:";
 }

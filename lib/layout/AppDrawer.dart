@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/class/MainActivity.dart';
 import 'package:flutter_ap/dataObject/UserInformation.dart';
 import 'package:flutter_ap/layout/DashBoardLayout.dart';
@@ -35,7 +35,8 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.history,
               text: Strings.TRANSACTION_HISTORY,
               onTap: () => {
-                    mainActivity.switchDrawer(HistoryLayout(userInformation),Strings.TRANSACTION_HISTORY),
+                    mainActivity.switchDrawer(HistoryLayout(userInformation),
+                        Strings.TRANSACTION_HISTORY),
                     Navigator.of(context).pop()
                   }),
           Divider(),
@@ -43,7 +44,9 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.contact_phone_outlined,
               text: Strings.SAVE_CONTACT_LIST,
               onTap: () => {
-                    mainActivity.switchDrawer(SavedContactLayout(userInformation),Strings.SAVE_CONTACT_LIST),
+                    mainActivity.switchDrawer(
+                        SavedContactLayout(userInformation),
+                        Strings.SAVE_CONTACT_LIST),
                     Navigator.of(context).pop()
                   }),
           Divider(),

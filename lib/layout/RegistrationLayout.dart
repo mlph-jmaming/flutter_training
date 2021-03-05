@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/class/RegistrationPage.dart';
 import 'package:flutter_ap/dataObject/UserInformation.dart';
 

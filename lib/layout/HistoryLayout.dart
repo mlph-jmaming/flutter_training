@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/class/CustomUtils.dart';
 import 'package:flutter_ap/dataObject/Contact.dart';
 import 'package:flutter_ap/dataObject/Transaction.dart';
@@ -15,22 +15,26 @@ class HistoryLayout extends StatelessWidget {
     this.userInformation = userInformation;
     historyList = new List();
 
-    historyList.add(listViewItem(
-        transactionDate: Strings.TRANSCTION_DATE, amount: Strings.AMOUNT));
+    historyList.add(HistoryTableRow().listViewItem(
+        transactionDate: Strings.DATE,
+        amount: Strings.AMOUNT,
+        description: Strings.DESCRIPTION));
     DateFormat formatter = DateFormat('MMM dd,yyyy kk:mm');
 
     for (Transaction transaction
         in userInformation.getSortedTransactionHistoryDesc()) {
-      historyList.add(listViewItem(
+      historyList.add(HistoryTableRow().listViewItem(
           transactionDate: formatter.format(transaction.dateTime),
-          amount: CustomUtils().formatCurrency(transaction.amount)));
+          amount: CustomUtils()
+              .formatCurrency(transaction.amount, transaction.isSent),
+          description: transaction.description));
     }
 
-    for (Contact contact in userInformation.contacts) {
-      historyList.add(listViewItem(
-          transactionDate: formatter.format(contact.transactionDate),
-          amount: "-" + CustomUtils().formatCurrency(contact.amount)));
-    }
+    // for (Contact contact in userInformation.contacts) {
+    //   historyList.add(HistoryTableRow().listViewItem(
+    //       transactionDate: formatter.format(contact.transactionDate),
+    //       amount: "-" + CustomUtils().formatCurrency(contact.amount)));
+    // }
   }
 
   @override
@@ -45,16 +49,38 @@ class HistoryLayout extends StatelessWidget {
       ),
     );
   }
+}
 
-  TableRow listViewItem({String transactionDate, String amount}) {
+class HistoryTableRow {
+  TableRow listViewItem(
+      {String transactionDate, String amount, String description}) {
     double fontSize = 15;
     double padding = 10;
-    if (transactionDate != Strings.TRANSCTION_DATE) {
+    if (transactionDate != Strings.DATE) {
       fontSize = 10;
       padding = 5;
     }
-
     return TableRow(children: <Widget>[
+      Container(
+        padding: EdgeInsets.only(bottom: padding),
+        child: Text(
+          amount,
+          style: TextStyle(
+            fontSize: fontSize,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(bottom: padding),
+        child: Text(
+          description,
+          style: TextStyle(
+            fontSize: fontSize,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
       Container(
         padding: EdgeInsets.only(bottom: padding),
         child: Text(
@@ -65,16 +91,6 @@ class HistoryLayout extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      Container(
-        padding: EdgeInsets.only(bottom: padding),
-        child: Text(
-          amount,
-          style: TextStyle(
-            fontSize: fontSize,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      )
     ]);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/dataObject/Contact.dart';
 import 'package:flutter_ap/dataObject/UserInformation.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +14,7 @@ class SavedContactLayout extends StatelessWidget {
     contactList = new List();
 
     contactList.add(listViewItem(
-        transactionDate: Strings.TRANSCTION_DATE,
+        transactionDate: Strings.DATE,
         amount: Strings.AMOUNT,
         name: Strings.NAME));
 

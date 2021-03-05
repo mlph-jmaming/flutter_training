@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/CustomSize.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/CustomSize.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 import 'package:flutter_ap/class/CustomUtils.dart';
 import 'package:flutter_ap/dataObject/Contact.dart';
 import 'package:flutter_ap/dataObject/Transaction.dart';
@@ -9,6 +9,8 @@ import 'package:flutter_ap/dataObject/UserInformation.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+
+import 'HistoryLayout.dart';
 
 class DashBoardLayout extends StatelessWidget {
   UserInformation userInformation;
@@ -24,8 +26,17 @@ class DashBoardLayout extends StatelessWidget {
     (myBuidContext as Element).markNeedsBuild();
   }
 
-  updateSendMoney(Contact contact) {
-    userInformation.contacts.add(contact);
+  updateSendMoney(Contact contact, bool willSave) {
+    if (willSave) {
+      userInformation.contacts.add(contact);
+    }
+    userInformation.sentMoney = userInformation.sentMoney + contact.amount;
+    Transaction sentTransaction = Transaction(
+        amount: contact.amount,
+        description: contact.description,
+        dateTime: contact.transactionDate);
+    sentTransaction.isSent = true;
+    userInformation.addTransactionHistory(sentTransaction);
     (myBuidContext as Element).markNeedsBuild();
   }
 
@@ -34,17 +45,21 @@ class DashBoardLayout extends StatelessWidget {
     myBuidContext = context;
     historyList = new List();
 
-    historyList.add(listViewItem(
-        transactionDate: Strings.TRANSCTION_DATE, amount: Strings.AMOUNT));
+    historyList.add(HistoryTableRow().listViewItem(
+        transactionDate: Strings.DATE,
+        amount: Strings.AMOUNT,
+        description: Strings.DESCRIPTION));
     DateFormat formatter = DateFormat('MMM dd,yyyy kk:mm');
 
     List<Transaction> histories =
         userInformation.getSortedTransactionHistoryDesc();
     for (int i = 0; i < 5; i++) {
       Transaction transaction = histories[i];
-      historyList.add(listViewItem(
+      historyList.add(HistoryTableRow().listViewItem(
           transactionDate: formatter.format(transaction.dateTime),
-          amount: CustomUtils().formatCurrency(transaction.amount)));
+          amount: CustomUtils()
+              .formatCurrency(transaction.amount, transaction.isSent),
+          description: transaction.description));
     }
 
     return Scaffold(
@@ -125,8 +140,7 @@ class DashBoardLayout extends StatelessWidget {
                       String cameraScanResult = await scanner.scan();
                       List<String> qrScanResult = cameraScanResult.split(":");
                       CustomUtils().showSendMoney(context, this,
-                          name: qrScanResult[2],
-                          accountNumber: int.parse(qrScanResult[1]));
+                          name: qrScanResult[2], description: qrScanResult[1]);
                     } else {
                       CustomUtils()
                           .showToast(context, Strings.PERMISSION_REQUIRED);
@@ -135,8 +149,7 @@ class DashBoardLayout extends StatelessWidget {
                     String cameraScanResult = await scanner.scan();
                     List<String> qrScanResult = cameraScanResult.split(":");
                     CustomUtils().showSendMoney(context, this,
-                        name: qrScanResult[2],
-                        accountNumber: int.parse(qrScanResult[1]));
+                        name: qrScanResult[2], description: qrScanResult[1]);
                   }
                 },
                 minWidth: 200.0,
@@ -161,37 +174,5 @@ class DashBoardLayout extends StatelessWidget {
         ),
       ),
     ));
-  }
-
-  TableRow listViewItem({String transactionDate, String amount}) {
-    double fontSize = 20;
-    double padding = 10;
-    if (transactionDate != Strings.TRANSCTION_DATE) {
-      fontSize = 15;
-      padding = 5;
-    }
-
-    return TableRow(children: <Widget>[
-      Container(
-        padding: EdgeInsets.only(bottom: padding),
-        child: Text(
-          transactionDate,
-          style: TextStyle(
-            fontSize: fontSize,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      Container(
-        padding: EdgeInsets.only(bottom: padding),
-        child: Text(
-          amount,
-          style: TextStyle(
-            fontSize: fontSize,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      )
-    ]);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ap/assert/CustomSize.dart';
+import 'package:flutter_ap/custom/CustomSize.dart';
 import 'package:flutter_ap/class/LoginPage.dart';
-import 'package:flutter_ap/assert/Strings.dart';
+import 'package:flutter_ap/custom/Strings.dart';
 
 class LoginLayout {
   Scaffold LogInUi(String title, LogInPage logInPage) {
